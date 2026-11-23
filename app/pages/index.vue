@@ -3,6 +3,8 @@ import { CodeXml, History, ListChecks, ScanLine, Sparkles } from '@lucide/vue'
 
 useSeoMeta({ title: 'Jakość treści HTML' })
 
+const account = useAccount()
+
 const benefits = [
   { icon: ScanLine, title: 'Sprawdź dostępność', body: 'Wychwyć brakujące opisy obrazów, puste nagłówki i ogólnikowe linki.' },
   { icon: Sparkles, title: 'Pisz prościej', body: 'Zobacz przykłady zmian, które ułatwiają czytanie i zachowują sens tekstu.' },
@@ -19,7 +21,8 @@ const benefits = [
           <h1>Dopracuj treść <em>przed publikacją.</em></h1>
           <p class="lede">Sprawdź fragment HTML pod kątem wybranych problemów dostępności i zobacz, jak uprościć tekst.</p>
           <div class="actions">
-            <NuxtLink class="button primary" to="/app/new">Wypróbuj demo</NuxtLink>
+          <NuxtLink v-if="account" class="button primary" to="/app/new">Nowa analiza</NuxtLink>
+          <NuxtLink v-else class="button primary" to="/register">Załóż konto</NuxtLink>
             <a class="button secondary" href="#how">Jak to działa</a>
           </div>
         </div>
@@ -51,7 +54,8 @@ const benefits = [
         <li>Zdecyduj, które zmiany wprowadzisz w treści.</li>
       </ol>
       <p>Raport obejmuje wybrane reguły dostępności. Pełna ocena WCAG wymaga szerszego audytu.</p>
-      <NuxtLink class="button primary" to="/register">Przejdź do rejestracji</NuxtLink>
+      <NuxtLink v-if="account" class="button primary" to="/app">Przejdź do panelu</NuxtLink>
+      <NuxtLink v-else class="button primary" to="/register">Przejdź do rejestracji</NuxtLink>
     </section>
   </div>
 </template>

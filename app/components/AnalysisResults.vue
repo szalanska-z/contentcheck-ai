@@ -11,10 +11,9 @@ const visibleIssues = computed(() => props.issues.filter(issue => category.value
 <template>
   <section class="card stack results" aria-labelledby="results-title">
     <div class="split">
-      <h2 id="results-title">Wyniki przykładowe <span class="pill">{{ issues.length }}</span></h2>
+      <h2 id="results-title">Wyniki analizy <span class="pill">{{ issues.length }}</span></h2>
       <button type="button" class="text-button" @click="emit('reset')">Nowa analiza</button>
     </div>
-    <p>Podgląd pokazuje wyniki dla wbudowanego przykładu.</p>
     <div class="actions" role="group" aria-label="Filtr kategorii">
       <button v-for="(label, key) in filters" :key="key" type="button" class="pill filter" :aria-pressed="category === key" @click="category = key">{{ label }}</button>
     </div>

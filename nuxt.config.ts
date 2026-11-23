@@ -3,6 +3,13 @@ export default defineNuxtConfig({
   modules: ['@nuxt/eslint'],
   css: ['~/assets/css/main.css'],
   typescript: { strict: true },
+  routeRules: {
+    '/': { headers: { 'cache-control': 'private, no-store' } },
+    '/login': { headers: { 'cache-control': 'private, no-store' } },
+    '/register': { headers: { 'cache-control': 'private, no-store' } },
+    '/app': { headers: { 'cache-control': 'private, no-store' } },
+    '/app/**': { headers: { 'cache-control': 'private, no-store' } },
+  },
   app: {
     head: {
       htmlAttrs: { lang: 'pl' },

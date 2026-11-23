@@ -11,10 +11,36 @@ export interface Issue {
   htmlSnippet: string
 }
 
-export interface DemoAnalysis {
+export interface AnalysisSummary {
+  id: string
+  title: string
+  issueCount: number
+  aiStatus: string
+  createdAt: string
+}
+
+export interface SavedAnalysis {
   id: string
   title: string
   originalHtml: string
   issues: Issue[]
   createdAt: string
+  sourceAnalysisId: string | null
+  aiStatus: string
+  aiModel: string | null
+  aiSuggestions: unknown
+}
+
+export interface AnalysisPage {
+  items: AnalysisSummary[]
+  page: number
+  limit: number
+  total: number
+}
+
+export interface DashboardData {
+  recent: AnalysisSummary[]
+  total: number
+  issueCount: number
+  withSuggestions: number
 }

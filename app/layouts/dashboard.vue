@@ -1,5 +1,28 @@
 <script setup lang="ts">
 import { History, LayoutDashboard, LogOut, Plus } from '@lucide/vue'
+
+const account = useAccount()
+const signingOut = ref(false)
+const signOutError = ref('')
+
+async function signOut() {
+  signingOut.value = true
+  signOutError.value = ''
+  try {
+    const result = await authClient.signOut()
+    if (result.error) {
+      signOutError.value = 'Nie udało się wylogować. Spróbuj ponownie.'
+      return
+    }
+    account.value = null
+    clearNuxtData()
+    await navigateTo('/login', { replace: true })
+  } catch {
+    signOutError.value = 'Nie udało się wylogować. Spróbuj ponownie.'
+  } finally {
+    signingOut.value = false
+  }
+}
 </script>
 
 <template>
@@ -11,10 +34,15 @@ import { History, LayoutDashboard, LogOut, Plus } from '@lucide/vue'
         <NuxtLink to="/app/new"><Plus :size="18" /> Nowa analiza</NuxtLink>
         <NuxtLink to="/app/analyses"><History :size="18" /> Historia</NuxtLink>
       </nav>
-      <div class="account"><strong>Ola · konto demo</strong><NuxtLink to="/login"><LogOut :size="17" /> Opuść demo</NuxtLink></div>
+      <div class="account">
+        <strong>{{ account?.name }}</strong>
+        <button type="button" class="text-button" :disabled="signingOut" @click="signOut">
+          <LogOut :size="17" /> {{ signingOut ? 'Wylogowywanie…' : 'Wyloguj się' }}
+        </button>
+        <p v-if="signOutError" class="error" role="alert">{{ signOutError }}</p>
+      </div>
     </aside>
     <main class="workspace">
-      <p class="eyebrow">Panel demonstracyjny</p>
       <slot />
     </main>
   </div>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { CodeXml, ScanLine } from '@lucide/vue'
+import { htmlLimit } from '#shared/schemas/analysis'
 
 const html = defineModel<string>({ required: true })
 defineProps<{ error: string }>()
@@ -11,7 +12,7 @@ const emit = defineEmits<{ analyze: [] }>()
     <div class="split">
       <label for="html"><CodeXml :size="20" /> Fragment HTML</label>
       <div class="actions">
-        <button type="button" class="text-button" @click="html = demoAnalysis.originalHtml">Wstaw przykład</button>
+        <button type="button" class="text-button" @click="html = exampleHtml">Wstaw przykład</button>
         <button type="button" class="text-button" @click="html = ''">Wyczyść</button>
       </div>
     </div>
@@ -19,7 +20,7 @@ const emit = defineEmits<{ analyze: [] }>()
     <p v-if="error" id="html-error" class="error" role="alert">{{ error }}</p>
     <div class="split">
       <small id="html-limit">{{ html.length }} / {{ htmlLimit.toLocaleString('pl-PL') }} znaków</small>
-      <button class="button primary" type="submit"><ScanLine :size="19" /> Pokaż wyniki demo</button>
+      <button class="button primary" type="submit"><ScanLine :size="19" /> Analizuj</button>
     </div>
   </form>
 </template>

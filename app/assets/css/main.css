@@ -85,6 +85,9 @@ textarea { resize: vertical; font-family: Consolas, monospace; }
 .history ul { list-style: none; padding: 0; margin: 0; }
 .history li + li { border-top: 1px solid var(--border); margin-top: 1rem; padding-top: 1rem; }
 .search { max-width: 26rem; }
+.report-title, .report-actions { min-width: 0; overflow-wrap: anywhere; }
+.danger { color: #a21b35; }
+button:disabled { cursor: default; opacity: .65; }
 @media (max-width: 800px) {
   .hero-grid, .dashboard { grid-template-columns: 1fr; }
   .sidebar { border-right: 0; border-bottom: 1px solid var(--border); gap: .65rem; }
