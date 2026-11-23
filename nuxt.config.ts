@@ -3,6 +3,12 @@ export default defineNuxtConfig({
   modules: ['@nuxt/eslint'],
   css: ['~/assets/css/main.css'],
   typescript: { strict: true },
+  runtimeConfig: {
+    aiMode: 'demo',
+    openaiApiKey: '',
+    openaiModel: '',
+    aiAllowProductionLive: false,
+  },
   routeRules: {
     '/': { headers: { 'cache-control': 'private, no-store' } },
     '/login': { headers: { 'cache-control': 'private, no-store' } },
