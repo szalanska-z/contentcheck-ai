@@ -29,10 +29,7 @@ useSeoMeta({ title: () => analysis.value?.title ?? 'Raport' })
         <pre><code>{{ analysis.originalHtml }}</code></pre>
       </section>
       <AnalysisResults :issues="analysis.issues" @reset="navigateTo('/app/new')" />
-      <section class="card stack results">
-        <h2>Sugestie AI</h2>
-        <p>Brak sugestii dla tego raportu.</p>
-      </section>
+      <AiSuggestions :key="analysis.id" :report="analysis" />
     </template>
   </div>
 </template>

@@ -1,3 +1,5 @@
+import type { AiMode, AiSuggestion } from '../schemas/ai'
+
 export type Category = 'structure' | 'links' | 'images'
 
 export interface Issue {
@@ -28,7 +30,15 @@ export interface SavedAnalysis {
   sourceAnalysisId: string | null
   aiStatus: string
   aiModel: string | null
-  aiSuggestions: unknown
+  aiSuggestions: AiSuggestion[] | null
+  aiMode: AiMode | null
+  generationMode: AiMode
+}
+
+export interface SuggestionResult {
+  aiSuggestions: AiSuggestion[]
+  aiMode: AiMode
+  aiModel: string | null
 }
 
 export interface AnalysisPage {

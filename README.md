@@ -30,7 +30,7 @@ npm run typecheck
 npm run build
 ```
 
-Unit tests cover analyzer rules, stable identifiers, and report input validation. Integration tests apply the checked-in migrations to fresh in-memory PostgreSQL databases using PGlite. They cover Better Auth and owner-scoped report queries. These tests require no Neon connection or OpenAI key.
+Unit tests cover analyzer rules, input validation, text extraction, and OpenAI SDK request and response handling with a fake transport. Integration tests apply the checked-in migrations to fresh in-memory PostgreSQL databases using PGlite. They cover Better Auth, owner-scoped report operations, suggestion persistence, and generation limits. These tests require no Neon connection or OpenAI key.
 
 ## Authentication
 
@@ -71,11 +71,28 @@ Index by `(user_id, created_at DESC, id DESC)` for stable history ordering. Use 
 | GET /api/analyses/:id | Return an owned snapshot |
 | PATCH /api/analyses/:id | Rename an owned snapshot |
 | DELETE /api/analyses/:id | Remove an owned snapshot |
-| POST /api/analyses/:id/suggestions | Planned for the AI milestone |
+| POST /api/analyses/:id/suggestions | Generate or return saved suggestions for an owned report |
 | GET /api/dashboard | Return aggregate counts and the five latest reports |
 
 Protected routes return 401 for missing sessions and 404 for both inaccessible and missing report IDs. The HTML analyzer uses parse5 to inspect a tree without executing scripts or loading resources. The browser uses the same rules for preview that the server uses to recalculate the saved findings. Generic link text requires contextual review. A report covers selected checks and cannot establish WCAG conformance.
 
+## AI suggestions
+
+Run `npm run db:migrate` against the Neon development branch for the AI migration. With `NUXT_AI_MODE=demo` (the default), use **Wstaw przykład** in the editor, save a new report, and choose **Pokaż sugestie demo** on the report. The demo produces a prepared rewrite for the example paragraph and works offline.
+
+| Variable | Purpose |
+| --- | --- |
+| `NUXT_AI_MODE` | `demo` or `live` |
+| `NUXT_OPENAI_API_KEY` | OpenAI project API key from the OpenAI platform settings, for live mode |
+| `NUXT_OPENAI_MODEL` | A model available to the project that supports Structured Outputs |
+| `NUXT_AI_ALLOW_PRODUCTION_LIVE` | Keep `false` until production live use is explicitly enabled |
+
+Live mode uses the Responses API with Structured Outputs and a 15-second SDK timeout. Configure spending controls on the OpenAI project before enabling production live traffic. The server extracts at most 10 editorial segments totaling 3,000 characters and requests at most three suggestions. It checks returned source IDs and original text against the input. A successful result, including an empty list, is stored and reused.
+
+Each account gets five started generations per UTC day, including provider failures. PostgreSQL atomically reserves a quota slot and a temporary claim on the report. A repeated request can return a saved result without consuming quota. An expired claim allows recovery after a worker stops before it saves the result.
+
+Reports and their suggestions remain in PostgreSQL until the user deletes the report. Live generation sends selected editorial text to OpenAI when the user requests suggestions. The application requests `store: false` on each call. OpenAI's API data handling is described in its [data controls documentation](https://developers.openai.com/api/docs/guides/your-data).
+
 ## Screenshots
 
-[Landing page](docs/screenshots/landing.jpg) · [Editor and results](docs/screenshots/analysis.jpg) · [Mobile editor](docs/screenshots/mobile.jpg)
+[Landing page](docs/screenshots/landing.jpg) · [Editor and results](docs/screenshots/analysis.jpg) · [Mobile editor](docs/screenshots/mobile.jpg) · [Demo suggestions](docs/screenshots/ai-suggestions-demo.jpg)
