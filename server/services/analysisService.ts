@@ -45,7 +45,7 @@ export function analysisService(db: PgDatabase<PgQueryResultHKT>, userId: string
     async get(id: string) {
       const [report] = await db.select().from(analyses).where(byId(id)).limit(1)
       if (!report) return
-      const { userId: _owner, ...snapshot } = report
+      const { userId: _owner, aiClaimId: _claimId, aiClaimUntil: _claimUntil, ...snapshot } = report
       return snapshot
     },
 

@@ -3,10 +3,20 @@ export default defineNuxtConfig({
   modules: ['@nuxt/eslint'],
   css: ['~/assets/css/main.css'],
   typescript: { strict: true },
+  vite: {
+    optimizeDeps: { include: ['@lucide/vue', '@vue/devtools-core', 'better-auth/vue', 'parse5', 'zod'] },
+  },
+  runtimeConfig: {
+    aiMode: 'demo',
+    openaiApiKey: '',
+    openaiModel: '',
+    aiAllowProductionLive: false,
+  },
   routeRules: {
     '/': { headers: { 'cache-control': 'private, no-store' } },
     '/login': { headers: { 'cache-control': 'private, no-store' } },
     '/register': { headers: { 'cache-control': 'private, no-store' } },
+    '/reset-password': { headers: { 'cache-control': 'private, no-store', 'referrer-policy': 'no-referrer' } },
     '/app': { headers: { 'cache-control': 'private, no-store' } },
     '/app/**': { headers: { 'cache-control': 'private, no-store' } },
   },

@@ -12,7 +12,7 @@ const emit = defineEmits<{ renamed: [], removed: [] }>()
       <li v-for="analysis in analyses" :key="analysis.id" class="split">
         <div class="report-title">
           <strong>{{ analysis.title }}</strong>
-          <p><time :datetime="analysis.createdAt">{{ formatReportDate(analysis.createdAt) }}</time> · Problemy: {{ analysis.issueCount }} · {{ analysis.aiStatus === 'success' ? 'Sugestie AI zapisane' : 'Bez sugestii AI' }}</p>
+          <p><time :datetime="analysis.createdAt">{{ formatReportDate(analysis.createdAt) }}</time> · Problemy: {{ analysis.issueCount }} · {{ suggestionStatus(analysis.aiStatus) }}</p>
         </div>
         <div class="actions">
           <NuxtLink :to="'/app/analyses/' + analysis.id" class="button secondary" :aria-label="'Otwórz raport: ' + analysis.title">Otwórz</NuxtLink>

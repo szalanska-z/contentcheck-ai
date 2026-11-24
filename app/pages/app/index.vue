@@ -10,7 +10,7 @@ const { data, status, error, refresh } = await useFetch<DashboardData>('/api/das
 const stats = computed(() => data.value && [
   { label: 'Analizy', value: data.value.total, icon: FileText },
   { label: 'Wykryte problemy', value: data.value.issueCount, icon: ScanLine },
-  { label: 'Analizy z sugestiami AI', value: data.value.withSuggestions, icon: Sparkles },
+  { label: 'Analizy z sugestiami', value: data.value.withSuggestions, icon: Sparkles },
 ])
 </script>
 

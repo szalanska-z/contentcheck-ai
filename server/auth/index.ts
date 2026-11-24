@@ -2,6 +2,7 @@ import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from '@better-auth/drizzle-adapter'
 import { getDatabase } from '../db/client'
 import * as schema from '../db/auth-schema'
+import { createAuthEmail, getEmailSettings } from './email'
 import { authOptions } from './options'
 
 function createAuth() {
@@ -26,8 +27,10 @@ function createAuth() {
   }
 
   const db = getDatabase()
+  const settings = production ? getEmailSettings() : undefined
+  const sendEmail = settings ? createAuthEmail(settings) : undefined
   return betterAuth({
-    ...authOptions(production),
+    ...authOptions(production, sendEmail),
     baseURL: baseURL.origin,
     secret: BETTER_AUTH_SECRET,
     database: drizzleAdapter(db, { provider: 'pg', schema, transaction: true }),
