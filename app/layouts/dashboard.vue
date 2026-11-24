@@ -27,6 +27,7 @@ async function signOut() {
 
 <template>
   <div class="dashboard">
+    <a class="skip-link" href="#main-content">Przejdź do treści</a>
     <aside class="sidebar">
       <BrandMark />
       <nav aria-label="Panel użytkownika">
@@ -42,7 +43,7 @@ async function signOut() {
         <p v-if="signOutError" class="error" role="alert">{{ signOutError }}</p>
       </div>
     </aside>
-    <main class="workspace">
+    <main id="main-content" class="workspace" tabindex="-1">
       <slot />
     </main>
   </div>

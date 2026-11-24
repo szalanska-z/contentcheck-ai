@@ -4,6 +4,7 @@ const account = useAccount()
 
 <template>
   <div>
+    <a class="skip-link" href="#main-content">Przejdź do treści</a>
     <header class="public-header">
       <nav class="wrap public-nav" aria-label="Nawigacja główna">
         <BrandMark />
@@ -14,7 +15,7 @@ const account = useAccount()
         </div>
       </nav>
     </header>
-    <main><slot /></main>
+    <main id="main-content" tabindex="-1"><slot /></main>
     <footer class="wrap footer"><BrandMark /><p>Analiza jakości treści i wybranych problemów dostępności.</p></footer>
   </div>
 </template>
