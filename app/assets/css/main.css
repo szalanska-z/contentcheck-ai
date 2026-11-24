@@ -88,6 +88,16 @@ textarea { resize: vertical; font-family: Consolas, monospace; }
 .report-title, .report-actions { min-width: 0; overflow-wrap: anywhere; }
 .danger { color: #a21b35; }
 button:disabled { cursor: default; opacity: .65; }
+.auth-fields { border: 0; padding: 0; margin: 0; min-inline-size: 0; }
+.skip-link {
+  position: fixed;
+  inset: 1rem auto auto 1rem;
+  z-index: 100;
+  padding: .5rem .75rem;
+  background: #fff;
+  transform: translateY(-200%);
+}
+.skip-link:focus { transform: none; }
 @media (max-width: 800px) {
   .hero-grid, .dashboard { grid-template-columns: 1fr; }
   .sidebar { border-right: 0; border-bottom: 1px solid var(--border); gap: .65rem; }

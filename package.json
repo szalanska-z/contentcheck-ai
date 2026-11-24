@@ -15,7 +15,9 @@
     "db:migrate": "drizzle-kit migrate",
     "db:auth-schema": "better-auth generate --config server/auth/schema-config.ts --adapter drizzle --dialect postgresql --output server/db/auth-schema.ts --yes",
     "test:integration": "vitest run tests/integration",
-    "test:unit": "vitest run tests/unit"
+    "test:unit": "vitest run tests/unit",
+    "test:components": "vitest run --config vitest.components.config.ts",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@better-auth/drizzle-adapter": "^1.7.27",
@@ -32,12 +34,17 @@
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.17",
+    "@electric-sql/pglite-socket": "^0.2.20",
     "@nuxt/eslint": "^1.0.0",
+    "@nuxt/test-utils": "^4.4.0",
+    "@playwright/test": "^1.65.1",
     "@types/pg": "^8.23.1",
+    "@vue/test-utils": "^2.6.0",
     "auth": "^1.7.27",
     "dotenv": "^18.0.10",
     "drizzle-kit": "^0.31.11",
     "eslint": "^10.0.0",
+    "happy-dom": "^21.0.4",
     "typescript": "~5.9.0",
     "vitest": "^5.1.1",
     "vue-tsc": "^3.0.0"
